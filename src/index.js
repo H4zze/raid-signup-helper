@@ -2,7 +2,7 @@ import express from 'express';
 import dotenv from 'dotenv';
 import { client, loginClient, parseSignups } from './discord.js';
 const app = express();
-const port = 3000;
+const port = process.env.PORT || 5000;
 
 dotenv.config();
 app.use((req, res, next) => {
