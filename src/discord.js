@@ -11,7 +11,7 @@ export const client = new Client({
   ],
   partials: ['MESSAGE', 'CHANNEL', 'REACTION', 'GUILD_MEMBER', 'USER'],
 });
-export const loginClient = (client) => client.login(token);
+export const loginClient = (client) => client.login(process.env.TOKEN);
 
 const cleanString = (text) =>
   text.replaceAll('**', '').replaceAll(':', '').toLowerCase();

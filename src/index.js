@@ -1,8 +1,10 @@
 import express from 'express';
+import dotenv from 'dotenv';
 import { client, loginClient, parseSignups } from './discord.js';
 const app = express();
 const port = 3000;
 
+dotenv.config();
 app.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', '*');
   res.header(
