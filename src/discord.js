@@ -1,6 +1,5 @@
 import { createRequire } from 'module';
 const require = createRequire(import.meta.url);
-const { token } = require('../auth.json'); // Tokens for login into discord server
 import { Client, Intents } from 'discord.js';
 
 export const client = new Client({
