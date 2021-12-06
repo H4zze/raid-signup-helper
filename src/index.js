@@ -2,7 +2,7 @@ import express from 'express';
 import dotenv from 'dotenv';
 import { client, loginClient, parseSignups } from './discord.js';
 const app = express();
-const port = process.env.PORT || 5000;
+const port = process.env.PORT || 3000;
 
 dotenv.config();
 app.use((req, res, next) => {
@@ -17,6 +17,7 @@ app.use((req, res, next) => {
 app.listen(port, () => {
   console.log(`Listening to port ${port}..`);
   loginClient(client);
+  // client.on('ready', () => console.log('Bot online..'));
   client.on('ready', () => console.log('Bot online..'));
 });
 

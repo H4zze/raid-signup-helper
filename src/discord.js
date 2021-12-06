@@ -35,6 +35,7 @@ export const parseSignups = (json) => {
       warrior: [],
       late: [],
       absence: [],
+      tentative: [],
     },
   };
   json.map((obj, i) => {
@@ -78,17 +79,23 @@ export const parseSignups = (json) => {
       const matched = obj.value.match(
         /(:[a-z]+\d?:)|(\*\*\w+.\*\*)|(\*\*\w+.\w+.\*\*)|(\*\*\w+.+\w+\*\*)/gi
       );
-
+      // console.log('MATHCEd', matched);
       if (matched) {
-        const c = cleanString(matched.shift());
-        if (c === 'Absence') {
-          matched.forEach((e) => {
-            const split = e.split(',');
-            split.forEach((s) => {
-              output.Classes[c].push(cleanString(s));
-            });
-          });
+        const c = cleanString(matched[0]);
+        if (c === 'absence' || c === 'tentative') {
+          const clean = matched.map((x) => cleanString(x));
+          const tentativeIndex = clean.findIndex(
+            (x) => cleanString(x) == 'tentative'
+          );
+          const absenceIndex = clean.findIndex((x) => x == 'absence');
+          const tentative = clean
+            .slice(tentativeIndex + 1, absenceIndex)
+            .filter((e, i) => i % 2 === 1);
+          const absencent = clean.slice(absenceIndex + 1);
+          output.Classes['tentative'] = tentative;
+          output.Classes['absence'] = absencent;
         } else if (output.Classes[c]) {
+          let a = matched.shift();
           let char = {};
 
           matched.forEach((e, i) => {
