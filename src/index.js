@@ -18,7 +18,24 @@ app.listen(port, () => {
   console.log(`Listening to port ${port}..`);
   loginClient(client);
   // client.on('ready', () => console.log('Bot online..'));
-  client.on('ready', () => console.log('Bot online..'));
+  client.on('ready', () => {
+    client.channels.fetch('813850172295348224').then((channel) => {
+      channel.messages.fetch('951243497879535676').then((msg) => {
+        const json = msg.embeds
+          .map((x) => x.fields)
+          .flat(2)
+          .slice(2);
+
+        if (json) {
+          // res.json(JSON.stringify(parseSignups(json)));
+          console.log(json);
+          console.log(JSON.stringify(parseSignups(json)));
+        } else {
+          // res.status('500');
+        }
+      });
+    });
+  });
 });
 
 app.get('/signups/:id', async (req, res) => {

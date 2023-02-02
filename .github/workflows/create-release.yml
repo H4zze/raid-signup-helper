@@ -1,0 +1,27 @@
+name: Create Release Tag
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  get-version:
+    name: Get version number
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Parse version
+        run: |
+          echo "VERSION=$(sed -En "s/('version' => ){1}'(.*)',$/\2/gp" src/version.txt)" >> $GITHUB_ENV
+
+      - name: Create tag
+        run: |
+          git tag v$VERSION
+          git push origin v$VERSION
+
+      - name: Create release
+        uses: ncipollo/release-action@v1
+        with:
+          tag: v${{ env.VERSION }}
+          generateReleaseNotes: true

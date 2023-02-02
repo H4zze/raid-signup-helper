@@ -57,7 +57,7 @@ export const parseSignups = (json) => {
       let healersParsed = false;
       cleanedRoleCount.forEach((e) => {
         switch (e) {
-          case 'Tanks':
+          case 'Tank':
             output.Tanks = +cleanedRoleCount[1];
             break;
           case 'Dps':
