@@ -1,13 +1,15 @@
 name: Create Release Tag
 on:
+  workflow_dispatch:
   push:
     branches:
-      - master
+      - main
 
 jobs:
   get-version:
     name: Get version number
     runs-on: ubuntu-latest
+    if: startsWith(github.event.head_commit.message, '# RELEASE v') || github.event_name == 'workflow_dispatch'
 
     steps:
       - uses: actions/checkout@v3
@@ -17,8 +19,8 @@ jobs:
 
       - name: Create tag
         run: |
-          git tag v$VERSION
-          git push origin v$VERSION
+          git tag v${{ env.VERSION }}
+          git push origin v${{ env.VERSION }}
 
       - name: Create release
         uses: ncipollo/release-action@v1
